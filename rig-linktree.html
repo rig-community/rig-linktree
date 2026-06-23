@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>RIG — Roblox Islamic Generation</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #071510;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 24px 16px 48px;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 420px;
+    }
+
+    /* ── HALAMAN ── */
+    .page { display: block; }
+    .page.hidden { display: none; }
+
+    /* ── CARD UTAMA ── */
+    .card {
+      background: #0a1f13;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 0.5px solid #1e4a28;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: #0d2818;
+      padding: 36px 24px 28px;
+      text-align: center;
+      border-bottom: 0.5px solid #1e4a28;
+    }
+
+    .ornament {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+    .ornament-line {
+      flex: 1;
+      height: 0.5px;
+      background: #c9a84c;
+      opacity: 0.4;
+      max-width: 60px;
+    }
+    .ornament-star { color: #c9a84c; font-size: 13px; opacity: 0.8; }
+
+    /* ── LOGO / AVATAR ── */
+    .avatar-ring {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      border: 2px solid #c9a84c;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+      background: #0d2818;
+      overflow: hidden;
+    }
+
+    /* Ganti src="logo-rig.png" dengan file logo kamu */
+    .avatar-ring img {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      border-radius: 50%;
+    }
+
+    .rig-name {
+      color: #f5ead8;
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: 4px;
+      margin-bottom: 4px;
+    }
+    .rig-full {
+      color: #c9a84c;
+      font-size: 11px;
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+      opacity: 0.9;
+    }
+    .rig-desc {
+      color: #7aaa88;
+      font-size: 12px;
+      line-height: 1.7;
+      max-width: 270px;
+      margin: 0 auto 16px;
+    }
+
+    .badge-row {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .badge {
+      font-size: 10px;
+      color: #3a7a4a;
+      border: 0.5px solid #1e4a28;
+      border-radius: 20px;
+      padding: 3px 10px;
+      letter-spacing: 0.5px;
+    }
+
+    .socials {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+    }
+    .soc-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 0.5px solid rgba(201,168,76,0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #c9a84c;
+      font-size: 16px;
+      text-decoration: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .soc-btn:hover { background: rgba(201,168,76,0.1); border-color: #c9a84c; }
+
+    /* ── LINKS ── */
+    .links { padding: 24px 20px 28px; }
+
+    .section-label {
+      color: #c9a84c;
+      font-size: 10px;
+      letter-spacing: 2.5px;
+      margin-bottom: 12px;
+      opacity: 0.7;
+      padding-left: 4px;
+    }
+
+    .link-card {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: #0d2818;
+      border: 0.5px solid #1e4a28;
+      border-radius: 12px;
+      padding: 13px 16px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .link-card:hover { border-color: rgba(201,168,76,0.5); background: #0f2e1c; }
+    .link-card.gold { border-color: rgba(201,168,76,0.35); background: #111f14; }
+    .link-card.gold:hover { border-color: #c9a84c; }
+
+    .link-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+    .icon-gold  { background: rgba(201,168,76,0.12); color: #c9a84c; }
+    .icon-disc  { background: rgba(88,101,242,0.15); color: #8b93f0; }
+    .icon-ig    { background: rgba(225,48,108,0.12); color: #e1306c; }
+    .icon-tt    { background: rgba(255,255,255,0.06); color: #ddd; }
+
+    .link-body { flex: 1; min-width: 0; }
+    .link-title { color: #f0e8d8; font-size: 13px; font-weight: 600; line-height: 1.3; }
+    .link-sub   { color: #5a8a66; font-size: 11px; margin-top: 2px; }
+    .link-arrow { color: #c9a84c; font-size: 13px; opacity: 0.5; flex-shrink: 0; }
+
+    .divider { height: 0.5px; background: #1e4a28; margin: 4px 0 16px; }
+
+    /* ── FOOTER ── */
+    .footer {
+      text-align: center;
+      padding: 0 20px 28px;
+      color: #2a5a34;
+      font-size: 11px;
+      letter-spacing: 1px;
+    }
+
+    /* ══════════════════════════════════
+       HALAMAN PENGURUS & PENGENALAN
+    ══════════════════════════════════ */
+    .subpage-hero {
+      background: #0d2818;
+      padding: 20px 20px 18px;
+      border-bottom: 0.5px solid #1e4a28;
+    }
+    .back-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #c9a84c;
+      font-size: 12px;
+      cursor: pointer;
+      margin-bottom: 14px;
+      background: none;
+      border: none;
+    }
+    .back-btn:hover { opacity: 0.7; }
+    .subpage-title { color: #f5ead8; font-size: 18px; font-weight: 600; letter-spacing: 1px; }
+    .subpage-sub   { color: #5a8a66; font-size: 12px; margin-top: 4px; }
+
+    .about-block {
+      background: #0d2818;
+      padding: 20px;
+      border-bottom: 0.5px solid #1e4a28;
+    }
+    .about-label {
+      color: #c9a84c;
+      font-size: 10px;
+      letter-spacing: 2px;
+      opacity: 0.7;
+      margin-bottom: 10px;
+    }
+    .about-text { color: #8aba94; font-size: 12px; line-height: 1.7; }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .stat-box {
+      background: #0a1f13;
+      border: 0.5px solid #1e4a28;
+      border-radius: 10px;
+      padding: 10px;
+      text-align: center;
+    }
+    .stat-num { color: #c9a84c; font-size: 20px; font-weight: 600; }
+    .stat-lbl { color: #3a7a4a; font-size: 10px; margin-top: 2px; }
+
+    /* ── STRUKTUR ── */
+    .str-wrap { padding: 20px; }
+    .str-section { margin-bottom: 20px; }
+    .str-head {
+      color: #c9a84c;
+      font-size: 10px;
+      letter-spacing: 2px;
+      opacity: 0.7;
+      margin-bottom: 10px;
+    }
+    .str-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #0d2818;
+      border: 0.5px solid #1e4a28;
+      border-radius: 10px;
+      padding: 10px 14px;
+      margin-bottom: 8px;
+    }
+    .str-num {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      border: 0.5px solid #c9a84c;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #c9a84c;
+      font-size: 11px;
+      flex-shrink: 0;
+    }
+    .str-info { flex: 1; }
+    .str-name { color: #f0e8d8; font-size: 13px; font-weight: 600; }
+    .str-role { color: #5a8a66; font-size: 11px; margin-top: 1px; }
+    .str-badge {
+      font-size: 10px;
+      padding: 3px 9px;
+      border-radius: 20px;
+      flex-shrink: 0;
+    }
+    .b-founder { background: rgba(201,168,76,0.12); color: #c9a84c;  border: 0.5px solid rgba(201,168,76,0.3); }
+    .b-ph      { background: rgba(29,158,117,0.12); color: #4db888;  border: 0.5px solid rgba(29,158,117,0.3); }
+    .b-mod     { background: rgba(88,101,242,0.10); color: #8b93f0;  border: 0.5px solid rgba(88,101,242,0.25); }
+    .b-media   { background: rgba(239,159,39,0.10); color: #d4941c;  border: 0.5px solid rgba(239,159,39,0.25); }
+    .b-akh     { background: rgba(212,83,126,0.10); color: #d4537e;  border: 0.5px solid rgba(212,83,126,0.25); }
+    .b-dev     { background: rgba(255,255,255,0.04); color: #888;    border: 0.5px solid #1e4a28; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- ══════════════ HALAMAN UTAMA ══════════════ -->
+  <div class="page card" id="main">
+
+    <div class="hero">
+      <div class="ornament">
+        <div class="ornament-line"></div>
+        <span class="ornament-star">✦</span>
+        <div class="ornament-line"></div>
+      </div>
+
+      <div class="avatar-ring">
+        <!--
+          CARA PASANG LOGO:
+          1. Simpan file logo kamu (misal: logo-rig.png) di folder yang sama dengan file HTML ini
+          2. Ganti teks "logo-rig.png" di bawah dengan nama file logo kamu
+          3. Jika pakai GitHub Pages, upload logo ke repo yang sama
+        -->
+        <img src="logo-rig.png" alt="Logo RIG" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'color:#c9a84c;font-size:28px;font-weight:600\'>RIG</span>'"/>
+      </div>
+
+      <p class="rig-name">R I G</p>
+      <p class="rig-full">ROBLOX ISLAMIC GENERATION</p>
+      <p class="rig-desc">Komunitas Muslim di Roblox — belajar, berdakwah, dan bertumbuh bersama</p>
+
+      <div class="badge-row">
+        <span class="badge">Roblox</span>
+        <span class="badge">Islamic</span>
+        <span class="badge">Community</span>
+      </div>
+
+      <div class="socials">
+        <a class="soc-btn" href="https://www.instagram.com/robloxislamicgeneration?igsh=MW0ycG81b3NxejZoNw==" target="_blank" title="Instagram RIG">
+          <i class="fa-brands fa-instagram"></i>
+        </a>
+        <a class="soc-btn" href="https://www.tiktok.com/@robloxislamicgeneration?_r=1&_t=ZS-97O79bXnFTT" target="_blank" title="TikTok RIG">
+          <i class="fa-brands fa-tiktok"></i>
+        </a>
+        <a class="soc-btn" href="https://discord.gg/gpHyXvThM" target="_blank" title="Discord RIG">
+          <i class="fa-brands fa-discord"></i>
+        </a>
+      </div>
+    </div>
+
+    <div class="links">
+      <p class="section-label">KENALI KAMI</p>
+      <div class="link-card gold" onclick="showSub()">
+        <div class="link-icon icon-gold"><i class="fa-solid fa-users"></i></div>
+        <div class="link-body">
+          <p class="link-title">Pengurus &amp; Pengenalan RIG</p>
+          <p class="link-sub">Siapa kami &amp; struktur organisasi</p>
+        </div>
+        <i class="fa-solid fa-chevron-right link-arrow"></i>
+      </div>
+
+      <a class="link-card" href="https://discord.gg/gpHyXvThM" target="_blank">
+        <div class="link-icon icon-disc"><i class="fa-brands fa-discord"></i></div>
+        <div class="link-body">
+          <p class="link-title">Discord RIG</p>
+          <p class="link-sub">discord.gg/gpHyXvThM · Free to join</p>
+        </div>
+        <i class="fa-solid fa-chevron-right link-arrow"></i>
+      </a>
+
+      <div class="divider"></div>
+      <p class="section-label">IKUTI KAMI</p>
+
+      <a class="link-card" href="https://www.instagram.com/robloxislamicgeneration?igsh=MW0ycG81b3NxejZoNw==" target="_blank">
+        <div class="link-icon icon-ig"><i class="fa-brands fa-instagram"></i></div>
+        <div class="link-body">
+          <p class="link-title">Instagram RIG</p>
+          <p class="link-sub">@robloxislamicgeneration</p>
+        </div>
+        <i class="fa-solid fa-chevron-right link-arrow"></i>
+      </a>
+
+      <a class="link-card" href="https://www.tiktok.com/@robloxislamicgeneration?_r=1&_t=ZS-97O79bXnFTT" target="_blank">
+        <div class="link-icon icon-tt"><i class="fa-brands fa-tiktok"></i></div>
+        <div class="link-body">
+          <p class="link-title">TikTok RIG</p>
+          <p class="link-sub">@robloxislamicgeneration</p>
+        </div>
+        <i class="fa-solid fa-chevron-right link-arrow"></i>
+      </a>
+    </div>
+
+    <p class="footer">— RIG · Roblox Islamic Generation —</p>
+  </div>
+
+
+  <!-- ══════════════ HALAMAN PENGURUS ══════════════ -->
+  <div class="page card hidden" id="sub">
+
+    <div class="subpage-hero">
+      <button class="back-btn" onclick="showMain()">
+        <i class="fa-solid fa-arrow-left"></i> Kembali
+      </button>
+      <p class="subpage-title">Pengurus &amp; Pengenalan</p>
+      <p class="subpage-sub">Roblox Islamic Generation</p>
+    </div>
+
+    <div class="about-block">
+      <p class="about-label">TENTANG RIG</p>
+      <p class="about-text">
+        RIG (Roblox Islamic Generation) adalah komunitas Muslim yang aktif di platform Roblox.
+        Kami hadir sebagai ruang bagi para pemuda Muslim untuk belajar Islam, berdakwah dengan santun,
+        memperkuat iman &amp; akhlak, serta membangun ukhuwah yang bermanfaat di dunia dan akhirat.
+      </p>
+      <div class="stats-row">
+        <div class="stat-box"><p class="stat-num">5+</p><p class="stat-lbl">Divisi Aktif</p></div>
+        <div class="stat-box"><p class="stat-num">15+</p><p class="stat-lbl">Pengurus</p></div>
+      </div>
+    </div>
+
+    <div class="str-wrap">
+
+      <div class="str-section">
+        <p class="str-head">FOUNDER / PENASEHAT</p>
+        <div class="str-card"><div class="str-num">1</div><div class="str-info"><p class="str-name">Ustadz Kodomomu</p><p class="str-role">Founder &amp; Penasehat</p></div><span class="str-badge b-founder">Founder</span></div>
+        <div class="str-card"><div class="str-num">2</div><div class="str-info"><p class="str-name">Ustadz Mukmin</p><p class="str-role">Founder &amp; Penasehat</p></div><span class="str-badge b-founder">Founder</span></div>
+      </div>
+
+      <div class="str-section">
+        <p class="str-head">PENGURUS HARIAN</p>
+        <div class="str-card"><div class="str-num">1</div><div class="str-info"><p class="str-name">Zicqho</p><p class="str-role">Pengurus Harian</p></div><span class="str-badge b-ph">Harian</span></div>
+        <div class="str-card"><div class="str-num">2</div><div class="str-info"><p class="str-name">Raden</p><p class="str-role">Pengurus Harian</p></div><span class="str-badge b-ph">Harian</span></div>
+        <div class="str-card"><div class="str-num">3</div><div class="str-info"><p class="str-name">Wan</p><p class="str-role">Pengurus Harian</p></div><span class="str-badge b-ph">Harian</span></div>
+      </div>
+
+      <div class="str-section">
+        <p class="str-head">DIVISI KAJIAN — PEMATERI</p>
+        <div class="str-card"><div class="str-num">1</div><div class="str-info"><p class="str-name">Ustadz Udin</p><p class="str-role">Pemateri Kajian</p></div><span class="str-badge b-mod">Kajian</span></div>
+        <div class="str-card"><div class="str-num">2</div><div class="str-info"><p class="str-name">Ustadz Royhan</p><p class="str-role">Pemateri Kajian</p></div><span class="str-badge b-mod">Kajian</span></div>
+        <div class="str-card"><div class="str-num">3</div><div class="str-info"><p class="str-name">Ustadzah Inces</p><p class="str-role">Pemateri Kajian</p></div><span class="str-badge b-mod">Kajian</span></div>
+      </div>
+
+      <div class="str-section">
+        <p class="str-head">MODERATOR</p>
+        <div class="str-card"><div class="str-num">1</div><div class="str-info"><p class="str-name">Arthala</p><p class="str-role">Moderator</p></div><span class="str-badge b-mod">Mod</span></div>
+        <div class="str-card"><div class="str-num">2</div><div class="str-info"><p class="str-name">Ikram</p><p class="str-role">Moderator</p></div><span class="str-badge b-mod">Mod</span></div>
+        <div class="str-card"><div class="str-num">3</div><div class="str-info"><p class="str-name">Fadhil</p><p class="str-role">Moderator</p></div><span class="str-badge b-mod">Mod</span></div>
+        <div class="str-card"><div class="str-num">4</div><div class="str-info"><p class="str-name">Nana</p><p class="str-role">Moderator</p></div><span class="str-badge b-mod">Mod</span></div>
+      </div>
+
+      <div class="str-section">
+        <p class="str-head">MEDIA</p>
+        <div class="str-card"><div class="str-num">1</div><div class="str-info"><p class="str-name">Ade</p><p class="str-role">Tim Media</p></div><span class="str-badge b-media">Media</span></div>
+        <div class="str-card"><div class="str-num">2</div><div class="str-info"><p class="str-name">King Zefeer</p><p class="str-role">Tim Media</p></div><span class="str-badge b-media">Media</span></div>
+        <div class="str-card"><div class="str-num">3</div><div class="str-info"><p class="str-name">Widya</p><p class="str-role">Tim Media</p></div><span class="str-badge b-media">Media</span></div>
+        <div class="str-card"><div class="str-num">4</div><div class="str-info"><p class="str-name">Nano</p><p class="str-role">Tim Media</p></div><span class="str-badge b-media">Media</span></div>
+      </div>
+
+      <div class="str-section">
+        <p class="str-head">AKHWAT CREW</p>
+        <div class="str-card"><div class="str-num">1</div><div class="str-info"><p class="str-name">Ruma</p><p class="str-role">Akhwat Crew</p></div><span class="str-badge b-akh">Akhwat</span></div>
+        <div class="str-card"><div class="str-num">2</div><div class="str-info"><p class="str-name">Annisa</p><p class="str-role">Akhwat Crew</p></div><span class="str-badge b-akh">Akhwat</span></div>
+        <div class="str-card"><div class="str-num">3</div><div class="str-info"><p class="str-name">Reina</p><p class="str-role">Akhwat Crew</p></div><span class="str-badge b-akh">Akhwat</span></div>
+        <div class="str-card"><div class="str-num">4</div><div class="str-info"><p class="str-name">Akhwat Private</p><p class="str-role">Akhwat Crew</p></div><span class="str-badge b-akh">Akhwat</span></div>
+      </div>
+
+      <div class="str-section">
+        <p class="str-head">DEVELOPER MAPS</p>
+        <div class="str-card"><div class="str-num">1</div><div class="str-info"><p class="str-name">Zxiee</p><p class="str-role">Developer Maps</p></div><span class="str-badge b-dev">Dev</span></div>
+      </div>
+
+    </div>
+    <p class="footer">— RIG · Roblox Islamic Generation —</p>
+  </div>
+
+</div>
+
+<script>
+  function showSub() {
+    document.getElementById('main').classList.add('hidden');
+    document.getElementById('sub').classList.remove('hidden');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  function showMain() {
+    document.getElementById('sub').classList.add('hidden');
+    document.getElementById('main').classList.remove('hidden');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>
